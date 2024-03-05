@@ -17,9 +17,12 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
     CategoryDB().refreshUI();
     super.initState();
   }
-//purpose 
+
   DateTime? _selecteddate;
   CategoryType? _categorytypenotifier;
+  TextEditingController?  textEditingController;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +33,7 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
             children: [
               //puropose
               TextFormField(
+                controller: textEditingController,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                   labelText: 'Purpose',
@@ -40,8 +44,11 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
               SizedBox(
                 height: 20,
               ),
+
               //amount
+
                TextFormField(
+                controller: textEditingController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                    labelText: 'Amount',
@@ -113,7 +120,10 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
                //selectCategory
                DropdownButton(
                 hint: Text('Select Category'),
-                items: CategoryDB().expenseCategoryNotifier.value.map((e) {
+                items: (_categorytypenotifier==CategoryType.income 
+                ?CategoryDB().incomeCategoryNotifier 
+                :CategoryDB().expenseCategoryNotifier)
+                .value.map((e) {
                   return DropdownMenuItem(
                     value: e.id,
                     child: Text(e.name)
@@ -126,11 +136,17 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
                SizedBox(
                 height: 10,
                ),
-               ElevatedButton(onPressed:() {}, child: Text("Submit"))
+               ElevatedButton(onPressed:() {
+                addTransaction();
+               }, child: Text("Submit"))
             ],
           ),
         )
         ),
     );
+  }
+
+  Future<void> addTransaction() async{
+
   }
 }
