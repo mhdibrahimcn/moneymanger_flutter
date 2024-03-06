@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:moneymanagement/db/Category/Category_db.dart';
@@ -164,7 +163,7 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
   Future<void> addTransaction() async{
     final purpose=_purposetxtcontroller.text;
     final amount=_amounttxtcontroller.text;
-    
+
     if (purpose==null) {
       return;
       
