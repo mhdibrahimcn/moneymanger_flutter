@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:moneymanagement/db/Category/Category_db.dart';
 import 'package:moneymanagement/models/Category/Category_Model.dart';
+import 'package:moneymanagement/models/Transactions/transaction_Model.dart';
 
 class transactionAddScreen extends StatefulWidget {
   static const routeName='add-transaction';
@@ -20,8 +23,10 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
 
   DateTime? _selecteddate;
   CategoryType? _categorytypenotifier;
-  TextEditingController?  textEditingController;
-
+  String? categoryId;
+  final _purposetxtcontroller=TextEditingController();
+  final _amounttxtcontroller=TextEditingController();
+  CategoryModel? _selectedcategory;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +38,7 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
             children: [
               //puropose
               TextFormField(
-                controller: textEditingController,
+                controller: _purposetxtcontroller,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                   labelText: 'Purpose',
@@ -48,7 +53,7 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
               //amount
 
                TextFormField(
-                controller: textEditingController,
+                controller: _amounttxtcontroller,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                    labelText: 'Amount',
@@ -60,6 +65,9 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
                   SizedBox(
                     height: 10,
                   ),
+
+                  //date
+
                TextButton.icon(onPressed: () async{
                 final  _tempselecteddate= await showDatePicker(
                                 context: context, 
@@ -90,6 +98,7 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
                       onChanged: (value) {
                         setState(() {
                           _categorytypenotifier=value;
+                          categoryId=null;
                         });
                        
                       },),
@@ -105,6 +114,7 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
                       onChanged: (value) {
                          setState(() {
                           _categorytypenotifier=value;
+                          categoryId=null;
                         });
                        
                          
@@ -119,6 +129,7 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
 
                //selectCategory
                DropdownButton(
+                value: categoryId,
                 hint: Text('Select Category'),
                 items: (_categorytypenotifier==CategoryType.income 
                 ?CategoryDB().incomeCategoryNotifier 
@@ -126,11 +137,15 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
                 .value.map((e) {
                   return DropdownMenuItem(
                     value: e.id,
-                    child: Text(e.name)
+                    child: Text(e.name),
+                    onTap: () => _selectedcategory=e,
                     );
                }).toList() 
                , onChanged: (value) {
-                 
+                 setState(() {
+                   categoryId=value;
+
+                 });
                },
                ),
                SizedBox(
@@ -147,6 +162,39 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
   }
 
   Future<void> addTransaction() async{
+    final purpose=_purposetxtcontroller.text;
+    final amount=_amounttxtcontroller.text;
+    
+    if (purpose==null) {
+      return;
+      
+    }
+
+     if (amount==null) {
+      return;
+    }
+    final amountValue=double.tryParse(amount);
+      if (amountValue==null) {
+      return;
+    }
+
+    if (_selecteddate==null) {
+      return;
+    }
+
+     if (_categorytypenotifier==null) {
+      return;
+    }
+
+    final _transactionmodel=transactionModel(
+      purpose: purpose, 
+      amount: amountValue, 
+      date: _selecteddate!, 
+      type: _categorytypenotifier!, 
+      category: _selectedcategory!
+      );
+   
+    }
+
 
   }
-}
