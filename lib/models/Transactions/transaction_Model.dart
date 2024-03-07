@@ -1,9 +1,13 @@
 import 'package:hive/hive.dart';
 import 'package:moneymanagement/models/Category/Category_Model.dart';
-part  'transaction_Model.g.dart';
+part 'transaction_Model.g.dart';
+
+
+
+
 
 @HiveType(typeId: 3)
-class transactionModel {
+class TransactionModel {
 
   @HiveField(0)
 final String purpose;
@@ -20,11 +24,19 @@ final CategoryType type;
   @HiveField(4)
 final CategoryModel category;
 
-  transactionModel({
+  @HiveField(5)
+  String? id;
+
+  TransactionModel({
     required this.purpose, 
     required this.amount, 
     required this.date, 
     required this.type, 
-    required this.category});
-  
+    required this.category
+    })
+    
+    {
+        id=DateTime.now().millisecondsSinceEpoch.toString();
+    }
 }
+

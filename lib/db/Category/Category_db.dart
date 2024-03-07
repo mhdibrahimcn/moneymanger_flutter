@@ -18,6 +18,7 @@ abstract class CategoryDbFunctions{
 
 class CategoryDB implements CategoryDbFunctions{
 
+//singleton
   CategoryDB._internal();
 
   static CategoryDB instance=CategoryDB._internal();

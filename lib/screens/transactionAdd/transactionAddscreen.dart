@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:moneymanagement/db/Category/Category_db.dart';
+import 'package:moneymanagement/db/Transactions/transaction_db.dart';
 import 'package:moneymanagement/models/Category/Category_Model.dart';
 import 'package:moneymanagement/models/Transactions/transaction_Model.dart';
 
@@ -185,14 +186,16 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
       return;
     }
 
-    final _transactionmodel=transactionModel(
+     transactionDB.instance.insertTransaction(
+      TransactionModel(
       purpose: purpose, 
       amount: amountValue, 
       date: _selecteddate!, 
       type: _categorytypenotifier!, 
       category: _selectedcategory!
-      );
+      )
    
+     ); 
     }
 
 

@@ -14,8 +14,8 @@ Future<void> main(List<String> args) async {
    if (!Hive.isAdapterRegistered(CategoryTypeAdapter().typeId)) {
     Hive.registerAdapter(CategoryTypeAdapter());
   }
-   if (!Hive.isAdapterRegistered(transactionModelAdapter().typeId)) {
-    Hive.registerAdapter(transactionModelAdapter());
+   if (!Hive.isAdapterRegistered(TransactionModelAdapter().typeId)) {
+    Hive.registerAdapter(TransactionModelAdapter());
   }
   runApp(const Myapp());
 }

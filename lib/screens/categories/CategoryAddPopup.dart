@@ -41,7 +41,8 @@ Future<void>showCategoryAddpopup(BuildContext context) async{
                   return;
                 }
           
-                CategoryDB.instance.insertCategory(CategoryModel(
+                CategoryDB.instance.insertCategory(
+                  CategoryModel(
                   id: DateTime.now().microsecondsSinceEpoch.toString(), 
                   name:texteditcontroller.text , 
                   type: SelectedCategoryNotifier.value));
