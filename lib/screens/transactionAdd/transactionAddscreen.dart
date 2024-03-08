@@ -153,6 +153,7 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
                ),
                ElevatedButton(onPressed:() {
                 addTransaction();
+                Navigator.of(context).pop();
                }, child: Text("Submit"))
             ],
           ),
@@ -185,17 +186,15 @@ class _transactionAddScreenState extends State<transactionAddScreen> {
      if (_categorytypenotifier==null) {
       return;
     }
-
-     transactionDB.instance.insertTransaction(
-      TransactionModel(
+    final  transactionmodel= TransactionModel(
       purpose: purpose, 
       amount: amountValue, 
       date: _selecteddate!, 
       type: _categorytypenotifier!, 
       category: _selectedcategory!
-      )
-   
-     ); 
+      );
+      print(transactionmodel.purpose);
+      transactionDB.instance.insertTransaction(transactionmodel); 
     }
 
 

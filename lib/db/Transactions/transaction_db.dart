@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:moneymanagement/models/Transactions/transaction_Model.dart';
 
  const TRANSACTION_DB_NAME="transaction-database";
+
 
 abstract class transactionDBFunctions{
   Future<void>insertTransaction(TransactionModel value);
@@ -18,12 +20,21 @@ class transactionDB implements transactionDBFunctions {
   factory transactionDB(){
     return instance;
   }
-
+ ValueNotifier <List<TransactionModel>> TransactionDbNotifier=ValueNotifier([]); 
 
   Future<void> insertTransaction(TransactionModel value) async{
   final  transaction_db=await Hive.openBox<TransactionModel>(TRANSACTION_DB_NAME);
-  transaction_db.put(value.id, value);
+ await transaction_db.put(value.id, value);
 
+
+  }
+
+  Future <void> refreshUi() async{
+    final _list=await getTransaction();
+    _list.sort((first,second)=>second.date.compareTo(second.date));
+    TransactionDbNotifier.value.clear();
+    TransactionDbNotifier.value.addAll(_list);
+    TransactionDbNotifier.notifyListeners();
   }
 
   @override
