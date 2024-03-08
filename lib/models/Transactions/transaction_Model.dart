@@ -2,41 +2,32 @@ import 'package:hive/hive.dart';
 import 'package:moneymanagement/models/Category/Category_Model.dart';
 part 'transaction_Model.g.dart';
 
-
-
-
-
 @HiveType(typeId: 3)
 class TransactionModel {
-
   @HiveField(0)
-final String purpose;
+  final String purpose;
 
   @HiveField(1)
-final double amount;
+  final double amount;
 
   @HiveField(2)
-final DateTime date;
+  final DateTime date;
 
   @HiveField(3)
-final CategoryType type;
+  final CategoryType type;
 
   @HiveField(4)
-final CategoryModel category;
+  final CategoryModel category;
 
   @HiveField(5)
   String? id;
 
-  TransactionModel({
-    required this.purpose, 
-    required this.amount, 
-    required this.date, 
-    required this.type, 
-    required this.category
-    })
-    
-    {
-        id=DateTime.now().millisecondsSinceEpoch.toString();
-    }
+  TransactionModel(
+      {required this.purpose,
+      required this.amount,
+      required this.date,
+      required this.type,
+      required this.category}) {
+    id = DateTime.now().millisecondsSinceEpoch.toString();
+  }
 }
-

@@ -1,14 +1,16 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:moneymanagement/db/Category/Category_db.dart';
 import 'package:moneymanagement/models/Category/Category_Model.dart';
 
-class ExpenseCategoryList extends StatelessWidget {
-  const ExpenseCategoryList({super.key});
+class IncomeCategoryList extends StatelessWidget {
+  const IncomeCategoryList({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: CategoryDB().expenseCategoryNotifier,
+      valueListenable: CategoryDB().incomeCategoryNotifier,
       builder: (BuildContext context, List<CategoryModel> newList, _) {
         return ListView.separated(
             itemBuilder: (context, index) {

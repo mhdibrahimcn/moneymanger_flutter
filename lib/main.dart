@@ -11,15 +11,14 @@ Future<void> main(List<String> args) async {
   if (!Hive.isAdapterRegistered(CategoryModelAdapter().typeId)) {
     Hive.registerAdapter(CategoryModelAdapter());
   }
-   if (!Hive.isAdapterRegistered(CategoryTypeAdapter().typeId)) {
+  if (!Hive.isAdapterRegistered(CategoryTypeAdapter().typeId)) {
     Hive.registerAdapter(CategoryTypeAdapter());
   }
-   if (!Hive.isAdapterRegistered(TransactionModelAdapter().typeId)) {
+  if (!Hive.isAdapterRegistered(TransactionModelAdapter().typeId)) {
     Hive.registerAdapter(TransactionModelAdapter());
   }
   runApp(const Myapp());
 }
-
 
 class Myapp extends StatelessWidget {
   const Myapp({super.key});
@@ -30,7 +29,7 @@ class Myapp extends StatelessWidget {
       theme: ThemeData(primaryColor: Colors.blue),
       home: const Homescreen(),
       routes: {
-        transactionAddScreen.routeName :(context) => transactionAddScreen()
+        transactionAddScreen.routeName: (context) => transactionAddScreen()
       },
     );
   }
